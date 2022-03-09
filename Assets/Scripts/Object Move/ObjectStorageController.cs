@@ -5,12 +5,20 @@ using UnityEngine;
 public class ObjectStorageController : MonoBehaviour
 {
     public float RayRange = 10;
+    public BlueprintController BlueprintIndicator;
     MovableObjectController stored;
+
+    private void Start()
+    {
+        if (BlueprintIndicator != null)
+            BlueprintIndicator.ClearMesh();
+    }
     public void StoreObject(MovableObjectController target)
     {
         if (stored==null)
         {
             target.OnStore();
+            BlueprintIndicator.LoadObject(target.gameObject);
             stored = target;
         }
     }
@@ -43,7 +51,7 @@ public class ObjectStorageController : MonoBehaviour
     {
         if (stored == null)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonUp(0))
         {
                 Ray checkRay = new Ray(transform.position, transform.forward);
                 TryStoreObjectRay(checkRay);
@@ -51,13 +59,28 @@ public class ObjectStorageController : MonoBehaviour
         }
         else
         {
-            if (Input.GetMouseButtonUp(0))
+            Ray PlaceRay = new Ray(transform.position, transform.forward);
+            if (Input.GetMouseButton(0))
             {
-                Ray PlaceRay = new Ray(transform.position, transform.forward);
+                
+                if (Physics.Raycast(PlaceRay, out RaycastHit hit, RayRange))
+                {
+                    BlueprintIndicator.ChangeState(stored.CanBePlacedThere(hit.point));
+                    BlueprintIndicator.transform.position = hit.point - stored.CenterDelta;
+                    BlueprintIndicator.gameObject.SetActive(true);
+                }
+                else
+                {
+                    BlueprintIndicator.gameObject.SetActive(false);
+                }
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
                 if (Physics.Raycast(PlaceRay, out RaycastHit hit, RayRange))
                 {
                     TryRetrieveObject(hit.point);
                 }
+                BlueprintIndicator.gameObject.SetActive(false);
             }
         }
     }

@@ -18,7 +18,7 @@ public class MovableObjectController : MonoBehaviour
     public bool CanBePlacedThere(Vector3 point)
     {
         Ray castRay = new Ray(point - CenterDelta, Vector3.down);
-        return true;// GetComponent<Collider>().Raycast(castRay, out RaycastHit hitInfo, 0);
+        return !GetComponent<Collider>().Raycast(castRay, out RaycastHit hitInfo, 0);
     }
     private void OnDrawGizmos()
     {
