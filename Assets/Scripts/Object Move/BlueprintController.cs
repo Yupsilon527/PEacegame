@@ -26,7 +26,7 @@ public class BlueprintController : MonoBehaviour
     }
     #endregion
     #region Materials
-    bool CanBeBuilt = false;
+    bool CanBeBuilt = true;
     public void ChangeState(bool canBuild)
     {
         if (CanBeBuilt!= canBuild)

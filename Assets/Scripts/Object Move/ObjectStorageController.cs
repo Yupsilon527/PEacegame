@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class ObjectStorageController : MonoBehaviour
 {
     public float RayRange = 10;
+    public bool PlaceMidAir = false;
     public BlueprintController BlueprintIndicator;
     MovableObjectController stored;
 
@@ -71,7 +73,9 @@ public class ObjectStorageController : MonoBehaviour
                 }
                 else
                 {
-                    BlueprintIndicator.gameObject.SetActive(false);
+                    Vector3 point = PlaceRay.GetPoint(RayRange);
+                    BlueprintIndicator.ChangeState(PlaceMidAir && stored.CanBePlacedThere(hit.point));
+                    BlueprintIndicator.transform.position = point - stored.CenterDelta;
                 }
             }
             else if (Input.GetMouseButtonUp(0))
@@ -79,6 +83,10 @@ public class ObjectStorageController : MonoBehaviour
                 if (Physics.Raycast(PlaceRay, out RaycastHit hit, RayRange))
                 {
                     TryRetrieveObject(hit.point);
+                }
+                else if (PlaceMidAir)
+                {
+                    TryRetrieveObject(PlaceRay.GetPoint(RayRange));
                 }
                 BlueprintIndicator.gameObject.SetActive(false);
             }
