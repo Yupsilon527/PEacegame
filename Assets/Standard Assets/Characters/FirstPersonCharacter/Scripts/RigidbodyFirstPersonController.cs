@@ -87,7 +87,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
-        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
+        public bool m_Jump; // made public during the ConBITi Games Jam in order to use for jump triggers
+        private bool m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
 
 
         public Vector3 Velocity
