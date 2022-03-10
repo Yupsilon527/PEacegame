@@ -181,7 +181,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RayRange: 10
-  PlaceMidAir: 0
   BlueprintIndicator: {fileID: 0}
 --- !u!1 &7931776383930010835
 GameObject:
@@ -315,9 +314,9 @@ MonoBehaviour:
     groundCheckDistance: 0.1
     stickToGroundHelperDistance: 0.6
     slowDownRate: 20
-    airControl: 0
+    airControl: 1
     shellOffset: 0
-  m_Jump: 0
+  m_Jumping: 0
 --- !u!114 &-4271630060830471089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedBoostLength: 3
-  speedBoostMultiplicator: 2
-  jumpMultiplicator: 3
+  speedBoostMultiplier: 2
+  jumpMultiplier: 3
   playerState: 1
