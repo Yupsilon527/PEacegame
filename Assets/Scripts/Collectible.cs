@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Collectible : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Collectible : MonoBehaviour
     [Tooltip("Movement period")]
     [SerializeField] float period = 5f;
     Vector3 startingPos;
+    private List<Text> fullWord;
 
     private void Start()
     {
@@ -44,13 +46,19 @@ public class Collectible : MonoBehaviour
     }
 
     // Destroys the gameObject if collided with a player object
-    // Add the gameObject name to the list attached to a player object
+    // Enables a corresponding letter in UI Canvas
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            List <string> letters = other.GetComponent<CollectibleTracker>().letters;
-            letters.Insert(letters.Count, gameObject.name);
+            fullWord = other.GetComponent<CollectibleTracker>().fullWord;
+            foreach (Text letter in fullWord)
+            {
+                if (gameObject.name == letter.name)
+                {
+                    letter.enabled = true;
+                }
+            }
             Destroy(gameObject);
         }
     }
