@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlatformDissolver : MonoBehaviour
 {
     [SerializeField] GameObject platform; // reference to the platform
-    private float interval = 2f; // waiting for 2 seconds
+    [SerializeField] float interval = 2f; // waiting for 2 seconds
+    [SerializeField] float pause = 2f; // waiting for 2 seconds
 
     IEnumerator Start()
     {
@@ -13,6 +14,7 @@ public class PlatformDissolver : MonoBehaviour
         {
             yield return new WaitForSeconds(interval); // waiting time
             platform.SetActive(!platform.activeSelf); // if the object was active, set as inactive, and vice versa
+            yield return new WaitForSeconds(pause); // waiting time
         }
 
     }
