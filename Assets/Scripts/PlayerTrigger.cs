@@ -41,6 +41,7 @@ public class PlayerTrigger : MonoBehaviour
             StartCoroutine("SpeedBoostTimer");
         }
         // Makes the player to do a reinforced jump using the multiplicator defined in the editor
+        // Speed boost is disabled after collision
         else if (collision.collider.CompareTag("JumpTrigger"))
         {
             if (playerState == SpeedBoostState.Boosted)
