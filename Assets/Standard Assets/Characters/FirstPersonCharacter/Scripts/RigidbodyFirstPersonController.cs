@@ -15,7 +15,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float ForwardSpeed = 8.0f;   // Speed when walking forward
             public float BackwardSpeed = 4.0f;  // Speed when walking backwards
             public float StrafeSpeed = 4.0f;    // Speed when walking sideways
-            public float AirControlSpeed = 4.0f;    // Speed when flying in the air (added during the ConBITi Games Jam)
+            public float AirControlSpeed = 2.0f;    // Speed when flying in the air (added during the ConBITi Games Jam)
             public float RunMultiplier = 2.0f;   // Speed when sprinting
             public KeyCode RunKey= KeyCode.LeftShift;
             public float JumpDuration = 1f;
@@ -158,56 +158,44 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             Vector2 input = GetInput();
 
-            // Player movement control when flying in teh air (added during the ConBITi Games Jam)
-            if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && advancedSettings.airControl && !m_IsGrounded && m_Flying)
+            // Player movement control when flying in the air (added during the ConBITi Games Jam)
+            if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && advancedSettings.airControl && !m_IsGrounded/* && m_Flying*/)
             {
-                movementSettings.CurrentTargetSpeed = movementSettings.AirControlSpeed; // Changes speed to AirControlSpeed (added during the ConBITi Games Jam)
-
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward * input.y + cam.transform.right * input.x;
                 desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
 
-                desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
-                desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
-                desiredMove.y = desiredMove.y * movementSettings.CurrentTargetSpeed;
-
-                localVelocityX = transform.InverseTransformDirection(m_RigidBody.velocity).x;
-                localVelocityY = transform.InverseTransformDirection(m_RigidBody.velocity).y;
-                localVelocityZ = transform.InverseTransformDirection(m_RigidBody.velocity).z;
-
-                if (Mathf.Abs(input.y) > float.Epsilon && (Math.Abs(localVelocityZ) < movementSettings.CurrentTargetSpeed || (localVelocityZ <= float.Epsilon && input.y > float.Epsilon) || (localVelocityZ >= float.Epsilon && input.y < float.Epsilon)))
+                if (!(m_RigidBody.velocity.x > -movementSettings.AirControlSpeed && desiredMove.x < 0) ||
+                    !(m_RigidBody.velocity.x < movementSettings.AirControlSpeed && desiredMove.x > 0))
                 {
-                    forceZ = desiredMove.x;
-                    forceZ = desiredMove.z;
-                    m_RigidBody.AddForce(new Vector3(0f, 0f, desiredMove.z), ForceMode.Impulse);
+                    m_RigidBody.AddForce(new Vector3(desiredMove.x * movementSettings.AirControlSpeed, 0f, 0f), ForceMode.Impulse);
                 }
-                if (Mathf.Abs(input.x) > float.Epsilon && (Math.Abs(localVelocityX) < movementSettings.CurrentTargetSpeed || (localVelocityX <= float.Epsilon && input.x > float.Epsilon) || (localVelocityX >= float.Epsilon && input.x < float.Epsilon)))
+                if (!(m_RigidBody.velocity.z > -movementSettings.AirControlSpeed && desiredMove.z < 0) ||
+                    !(m_RigidBody.velocity.z < movementSettings.AirControlSpeed && desiredMove.z > 0))
                 {
-                    forceZ = desiredMove.x;
-                    forceZ = desiredMove.z;
-                    m_RigidBody.AddForce(new Vector3(desiredMove.x, 0f, 0f), ForceMode.Impulse);
+                    m_RigidBody.AddForce(new Vector3(0f, 0f, desiredMove.z * movementSettings.AirControlSpeed), ForceMode.Impulse);
                 }
-
-                #region Draft code
-                //if (Mathf.Abs(input.y) > float.Epsilon && (Math.Abs(localVelocityZ) < movementSettings.CurrentTargetSpeed || (localVelocityZ <= float.Epsilon && input.y > float.Epsilon) || (localVelocityZ >= float.Epsilon && input.y < float.Epsilon)))
-                //{                    
-                //    desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
-                //    forceZ = desiredMove.z;
-                //    forceX = desiredMove.x;
-                //}
-                //if (Mathf.Abs(input.x) > float.Epsilon && (Math.Abs(localVelocityX) < movementSettings.CurrentTargetSpeed || (localVelocityX <= float.Epsilon && input.x > float.Epsilon) || (localVelocityX >= float.Epsilon && input.x < float.Epsilon)))
-                //{
-                //    desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
-                //    forceZ = desiredMove.z;
-                //    forceX = desiredMove.x;
-                //}
-                //if (m_RigidBody.velocity.sqrMagnitude <
-                //(movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
-                //{
-                //    m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
-                //}
-                #endregion
             }
+
+            #region Draft code
+            //if (Mathf.Abs(input.y) > float.Epsilon && (Math.Abs(localVelocityZ) < movementSettings.CurrentTargetSpeed || (localVelocityZ <= float.Epsilon && input.y > float.Epsilon) || (localVelocityZ >= float.Epsilon && input.y < float.Epsilon)))
+            //{                    
+            //    desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
+            //    forceZ = desiredMove.z;
+            //    forceX = desiredMove.x;
+            //}
+            //if (Mathf.Abs(input.x) > float.Epsilon && (Math.Abs(localVelocityX) < movementSettings.CurrentTargetSpeed || (localVelocityX <= float.Epsilon && input.x > float.Epsilon) || (localVelocityX >= float.Epsilon && input.x < float.Epsilon)))
+            //{
+            //    desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
+            //    forceZ = desiredMove.z;
+            //    forceX = desiredMove.x;
+            //}
+            //if (m_RigidBody.velocity.sqrMagnitude <
+            //(movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
+            //{
+            //    m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
+            //}
+            #endregion
             // Player movement control in all other cases (some tweaks of the initial code during the ConBITi Games Jam)
             else if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (m_IsGrounded || m_Jumping)) // Changed during the ConBITi Games Jam. Initial bool was '(m_IsGrounded || advancedSettings.airControl)' 
             {
@@ -215,8 +203,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 Vector3 desiredMove = cam.transform.forward * input.y + cam.transform.right * input.x;
                 desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
 
-                if (Input.GetKey(movementSettings.RunKey) && !m_IsGrounded)
-                    movementSettings.CurrentTargetSpeed /= movementSettings.RunMultiplier;
+                //if (Input.GetKey(movementSettings.RunKey) && !m_IsGrounded)
+                //    movementSettings.CurrentTargetSpeed /= movementSettings.RunMultiplier;
 
                 desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
                 desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;

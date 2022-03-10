@@ -15,10 +15,12 @@ public class Collectible : MonoBehaviour
     [SerializeField] float period = 5f;
     Vector3 startingPos;
     private List<GameObject> fullWord;
+    public AudioSource audioSource;
 
     private void Start()
     {
         startingPos = transform.position;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -60,6 +62,11 @@ public class Collectible : MonoBehaviour
                 }
             }
             Destroy(gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            audioSource.Play(); //play sound here
         }
     }
 }
