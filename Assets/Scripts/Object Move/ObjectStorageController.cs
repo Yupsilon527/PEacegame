@@ -87,7 +87,6 @@ public class ObjectStorageController : MonoBehaviour
                     {
                         BlueprintIndicator.ChangeState(stored.CanBePlacedThere(hit.point));
                         BlueprintIndicator.transform.position = hit.point - stored.CenterDelta;
-                        BlueprintIndicator.gameObject.SetActive(true);
                     }
                     else
                     {
@@ -95,6 +94,7 @@ public class ObjectStorageController : MonoBehaviour
                         BlueprintIndicator.ChangeState(!stored.RequiresGround && stored.CanBePlacedThere(hit.point));
                         BlueprintIndicator.transform.position = point - stored.CenterDelta;
                     }
+                    BlueprintIndicator.gameObject.SetActive(true);
                 }
             }
             else if (Input.GetMouseButtonUp(0))
