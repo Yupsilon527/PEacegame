@@ -65,11 +65,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1115190767910132305, guid: 61ef65c67e27eef4da7863580069429b, type: 3}
       propertyPath: m_Name
-      value: FloatyPlatformMovable
+      value: FloatyPlatformMovable Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1115190767910132310, guid: 61ef65c67e27eef4da7863580069429b, type: 3}
       propertyPath: mesh
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115190767910132310, guid: 61ef65c67e27eef4da7863580069429b, type: 3}
+      propertyPath: CenterDelta.y
+      value: -0.075
       objectReference: {fileID: 0}
     - target: {fileID: 1115190767910132310, guid: 61ef65c67e27eef4da7863580069429b, type: 3}
       propertyPath: RequiresGround
