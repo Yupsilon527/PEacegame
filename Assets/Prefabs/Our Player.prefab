@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 7931776383917035381}
   - component: {fileID: 7931776383919290673}
   - component: {fileID: -4271630060830471089}
-  - component: {fileID: -4687334416801274158}
+  - component: {fileID: 5730613380873937457}
   m_Layer: 0
   m_Name: Our Player
   m_TagString: Player
@@ -344,7 +344,7 @@ MonoBehaviour:
   playerState: 1
   scene: {fileID: 0}
   deathElevation: -20
---- !u!114 &-4687334416801274158
+--- !u!114 &5730613380873937457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -356,4 +356,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a73f38f7c738e04f88777161f0d66ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  letters: []
+  fullWord:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

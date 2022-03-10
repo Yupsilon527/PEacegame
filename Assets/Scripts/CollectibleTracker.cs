@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CollectibleTracker : MonoBehaviour
 {
-    // List of collected letters
-    /*[HideInInspector]*/ public List<string> letters;
+    public List<Text> fullWord;
+
+    private void Start()
+    {
+        // Disables all UI letters
+        foreach (Text letter in fullWord)
+            letter.enabled = false;
+    }
 }
