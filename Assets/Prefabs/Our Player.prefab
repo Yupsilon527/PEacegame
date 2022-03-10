@@ -302,11 +302,12 @@ MonoBehaviour:
     BackwardSpeed: 4
     StrafeSpeed: 4
     AirControlSpeed: 4
+    AirControlAcceleration: 2
     RunMultiplier: 2
     RunKey: 304
     JumpDuration: 0.5
     JumpForce: 5
-    JumpForceEnd: 2
+    JumpForceEnd: 3
     SlopeCurveModifier:
       serializedVersion: 2
       m_Curve:

@@ -16,6 +16,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float BackwardSpeed = 4.0f;  // Speed when walking backwards
             public float StrafeSpeed = 4.0f;    // Speed when walking sideways
             public float AirControlSpeed = 2.0f;    // Speed when flying in the air (added during the ConBITi Games Jam)
+            public float AirControlAcceleration = 1;    
             public float RunMultiplier = 2.0f;   // Speed when sprinting
             public KeyCode RunKey= KeyCode.LeftShift;
             public float JumpDuration = 1f;
@@ -157,23 +158,21 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_Flying = true;
 
             Vector2 input = GetInput();
+            float angle = cam.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
+            Vector3 desiredMove = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * input.y + cam.transform.right * input.x;
 
             // Player movement control when flying in the air (added during the ConBITi Games Jam)
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && advancedSettings.airControl && !m_IsGrounded/* && m_Flying*/)
             {
                 // always move along the camera forward as it is the direction that it being aimed at
-                Vector3 desiredMove = cam.transform.forward * input.y + cam.transform.right * input.x;
-                desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
 
-                if (!(m_RigidBody.velocity.x > -movementSettings.AirControlSpeed && desiredMove.x < 0) ||
-                    !(m_RigidBody.velocity.x < movementSettings.AirControlSpeed && desiredMove.x > 0))
+                if (Mathf.Abs(m_RigidBody.velocity.x) < movementSettings.AirControlSpeed || Mathf.Sign(desiredMove.x) != Mathf.Sign(m_RigidBody.velocity.x))
                 {
-                    m_RigidBody.AddForce(new Vector3(desiredMove.x * movementSettings.AirControlSpeed, 0f, 0f), ForceMode.Impulse);
+                    m_RigidBody.AddForce(new Vector3(desiredMove.x * movementSettings.AirControlAcceleration, 0f, 0f), ForceMode.Impulse);
                 }
-                if (!(m_RigidBody.velocity.z > -movementSettings.AirControlSpeed && desiredMove.z < 0) ||
-                    !(m_RigidBody.velocity.z < movementSettings.AirControlSpeed && desiredMove.z > 0))
+                if (Mathf.Abs(m_RigidBody.velocity.z) < movementSettings.AirControlSpeed || Mathf.Sign(desiredMove.z) != Mathf.Sign(m_RigidBody.velocity.z))
                 {
-                    m_RigidBody.AddForce(new Vector3(0f, 0f, desiredMove.z * movementSettings.AirControlSpeed), ForceMode.Impulse);
+                    m_RigidBody.AddForce(new Vector3(0f, 0f, desiredMove.z * movementSettings.AirControlAcceleration), ForceMode.Impulse);
                 }
             }
 
@@ -200,8 +199,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             else if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (m_IsGrounded || m_Jumping)) // Changed during the ConBITi Games Jam. Initial bool was '(m_IsGrounded || advancedSettings.airControl)' 
             {
                 // always move along the camera forward as it is the direction that it being aimed at
-                Vector3 desiredMove = cam.transform.forward * input.y + cam.transform.right * input.x;
-                desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
 
                 //if (Input.GetKey(movementSettings.RunKey) && !m_IsGrounded)
                 //    movementSettings.CurrentTargetSpeed /= movementSettings.RunMultiplier;
