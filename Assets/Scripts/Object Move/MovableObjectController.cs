@@ -13,6 +13,7 @@ public class MovableObjectController : MonoBehaviour
         box
     }
     public Vector3 CenterDelta = Vector3.zero;
+    public bool RequiresGround = true;
     public CastType mesh = CastType.none;
 
     public void OnStore()

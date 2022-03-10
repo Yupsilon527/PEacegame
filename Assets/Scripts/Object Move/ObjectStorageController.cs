@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class ObjectStorageController : MonoBehaviour
 {
     public float RayRange = 10;
-    public bool PlaceMidAir = false;
     public BlueprintController BlueprintIndicator;
     MovableObjectController stored;
 
@@ -20,7 +18,8 @@ public class ObjectStorageController : MonoBehaviour
         if (stored==null)
         {
             target.OnStore();
-            BlueprintIndicator.LoadObject(target.gameObject);
+            if (BlueprintIndicator != null)
+                BlueprintIndicator.LoadObject(target.gameObject);
             stored = target;
         }
     }
@@ -64,18 +63,20 @@ public class ObjectStorageController : MonoBehaviour
             Ray PlaceRay = new Ray(transform.position, transform.forward);
             if (Input.GetMouseButton(0))
             {
-                
-                if (Physics.Raycast(PlaceRay, out RaycastHit hit, RayRange))
+                if (BlueprintIndicator != null)
                 {
-                    BlueprintIndicator.ChangeState(stored.CanBePlacedThere(hit.point));
-                    BlueprintIndicator.transform.position = hit.point - stored.CenterDelta;
-                    BlueprintIndicator.gameObject.SetActive(true);
-                }
-                else
-                {
-                    Vector3 point = PlaceRay.GetPoint(RayRange);
-                    BlueprintIndicator.ChangeState(PlaceMidAir && stored.CanBePlacedThere(hit.point));
-                    BlueprintIndicator.transform.position = point - stored.CenterDelta;
+                    if (Physics.Raycast(PlaceRay, out RaycastHit hit, RayRange))
+                    {
+                        BlueprintIndicator.ChangeState(stored.CanBePlacedThere(hit.point));
+                        BlueprintIndicator.transform.position = hit.point - stored.CenterDelta;
+                        BlueprintIndicator.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        Vector3 point = PlaceRay.GetPoint(RayRange);
+                        BlueprintIndicator.ChangeState(!stored.RequiresGround && stored.CanBePlacedThere(hit.point));
+                        BlueprintIndicator.transform.position = point - stored.CenterDelta;
+                    }
                 }
             }
             else if (Input.GetMouseButtonUp(0))
@@ -84,11 +85,12 @@ public class ObjectStorageController : MonoBehaviour
                 {
                     TryRetrieveObject(hit.point);
                 }
-                else if (PlaceMidAir)
+                else if (!stored.RequiresGround)
                 {
                     TryRetrieveObject(PlaceRay.GetPoint(RayRange));
                 }
-                BlueprintIndicator.gameObject.SetActive(false);
+                if (BlueprintIndicator != null)
+                    BlueprintIndicator.gameObject.SetActive(false);
             }
         }
     }
