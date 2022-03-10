@@ -1944,6 +1944,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3488417064643052504, guid: 9154f90a80958144f88dae28a698aeb5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 5466402944078410376, guid: 9154f90a80958144f88dae28a698aeb5, type: 3}
       propertyPath: m_Name
       value: Clouds
@@ -4015,7 +4019,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 1011895433643667432, guid: 0b47e7f2f1b5a3a4bb0b61233897504e, type: 2}
-  m_audioClip: {fileID: 8300000, guid: eb69ae6c890c1964ba0bfceb922fad6c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a2ae1b4178d36cb418f9a2fc13da24af, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.015
   m_Pitch: 1
