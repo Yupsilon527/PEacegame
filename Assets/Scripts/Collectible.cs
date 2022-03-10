@@ -14,7 +14,7 @@ public class Collectible : MonoBehaviour
     [Tooltip("Movement period")]
     [SerializeField] float period = 5f;
     Vector3 startingPos;
-    private List<Text> fullWord;
+    private List<GameObject> fullWord;
 
     private void Start()
     {
@@ -52,11 +52,11 @@ public class Collectible : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             fullWord = other.GetComponent<CollectibleTracker>().fullWord;
-            foreach (Text letter in fullWord)
+            foreach (GameObject letter in fullWord)
             {
                 if (gameObject.name == letter.name)
                 {
-                    letter.enabled = true;
+                    letter.SetActive(true);
                 }
             }
             Destroy(gameObject);
