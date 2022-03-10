@@ -214,6 +214,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CylinderMovable
       objectReference: {fileID: 0}
+    - target: {fileID: 5201847533965900919, guid: 6603262476de8354c8c61d35adac0e26, type: 3}
+      propertyPath: RequiresGround
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5201847533965900924, guid: 6603262476de8354c8c61d35adac0e26, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -812,6 +816,14 @@ PrefabInstance:
     - target: {fileID: 1115190767910132305, guid: 61ef65c67e27eef4da7863580069429b, type: 3}
       propertyPath: m_Name
       value: CubeMoveable
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115190767910132310, guid: 61ef65c67e27eef4da7863580069429b, type: 3}
+      propertyPath: mesh
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115190767910132310, guid: 61ef65c67e27eef4da7863580069429b, type: 3}
+      propertyPath: RequiresGround
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1115190768266973617, guid: 61ef65c67e27eef4da7863580069429b, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2346,5 +2358,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3488417063197083795, guid: 9154f90a80958144f88dae28a698aeb5, type: 3}
+    - {fileID: 3488417063052593883, guid: 9154f90a80958144f88dae28a698aeb5, type: 3}
+    - {fileID: 3488417064120001822, guid: 9154f90a80958144f88dae28a698aeb5, type: 3}
+    - {fileID: 3488417062553804640, guid: 9154f90a80958144f88dae28a698aeb5, type: 3}
+    - {fileID: 3488417064643052509, guid: 9154f90a80958144f88dae28a698aeb5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9154f90a80958144f88dae28a698aeb5, type: 3}
