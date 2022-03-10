@@ -18,7 +18,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float AirControlSpeed = 4.0f;    // Speed when flying in the air (added during the ConBITi Games Jam)
             public float RunMultiplier = 2.0f;   // Speed when sprinting
             public KeyCode RunKey= KeyCode.LeftShift;
+            public float JumpDuration = 1f;
             public float JumpForce = 50f;
+            public float JumpForceEnd = 20f;
             public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
             [HideInInspector] public float CurrentTargetSpeed = 8f;
 
@@ -135,7 +137,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
-                m_Jump = true;
+                StartJumping();
             }
         }
 
@@ -230,14 +232,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_RigidBody.drag = 5f;
 
-                if (m_Jump)
-                {
-                    m_RigidBody.drag = 0f;
-                    m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
-                    m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
-                    m_Jumping = true;
-                    StartCoroutine("JumpTimer"); // Small tweak here to check if the player is flying  (added during the ConBITi Games Jam)
-                }
 
                 if (!m_Jumping && !m_Flying && Mathf.Abs(input.x) < float.Epsilon && Mathf.Abs(input.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
                 {
@@ -252,7 +246,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     StickToGroundHelper();
                 }
             }
-            m_Jump = false;
         }
         // Changes player to flying state if is in the air 1 second after a jump (added during the ConBITi Games Jam)
         IEnumerator JumpTimer()
@@ -262,6 +255,31 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_Flying = true;
         }
 
+        Coroutine JumpCoroutine;
+        void StartJumping()
+        {
+            if (m_IsGrounded)
+            {
+                JumpCoroutine = StartCoroutine(JumpWhilePress());
+
+            }
+        }
+        IEnumerator JumpWhilePress()
+        {
+            m_Jumping = true;
+            float StartTime = Time.time;
+            while(CrossPlatformInputManager.GetButton("Jump") && StartTime + movementSettings.JumpDuration>Time.time)
+            {
+                Vector3 vel = m_RigidBody.velocity;
+                vel.y = movementSettings.JumpForce;
+                    m_RigidBody.velocity = vel;
+                yield return new WaitForEndOfFrame();
+            }
+            Vector3 evel = m_RigidBody.velocity;
+            evel.y = movementSettings.JumpForceEnd;
+            m_RigidBody.velocity = evel;
+            m_Jumping = false;
+        }
 
         private float SlopeMultiplier()
         {
