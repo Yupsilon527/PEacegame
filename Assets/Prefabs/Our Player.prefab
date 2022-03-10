@@ -343,7 +343,7 @@ MonoBehaviour:
   jumpMultiplier: 3
   playerState: 1
   scene: {fileID: 0}
-  deathElevation: -20
+  deathElevation: -10
 --- !u!114 &5730613380873937457
 MonoBehaviour:
   m_ObjectHideFlags: 0
