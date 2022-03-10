@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7302238, g: 0.7889745, b: 0.8498578, a: 1}
+  m_IndirectSpecularColor: {r: 0.7302364, g: 0.78897995, b: 0.8498586, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1196,23 +1196,23 @@ PrefabInstance:
     - target: {fileID: 5730613380873937457, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: fullWord.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1906730797}
     - target: {fileID: 5730613380873937457, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: fullWord.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1920008830}
     - target: {fileID: 5730613380873937457, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: fullWord.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1727397521}
     - target: {fileID: 5730613380873937457, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: fullWord.Array.data[3]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 218997110}
     - target: {fileID: 5730613380873937457, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: fullWord.Array.data[4]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1711123592}
     - target: {fileID: 7931776383917035381, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: m_IsTrigger
       value: 0
