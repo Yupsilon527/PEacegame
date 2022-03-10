@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlatformMover : MonoBehaviour
 {
     [SerializeField] GameObject player; // reference to the player
-    private float movementSpeed = 10f; // movement speed
+    [SerializeField] float movementSpeed = 5; // movement speed
 
     public Vector3[] points; // array storing destination coordinates
     private int pointNumber = 0; // default number of a destination point
@@ -19,7 +19,7 @@ public class PlatformMover : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
 
         if (transform.position != currentTarget)
@@ -48,20 +48,22 @@ public class PlatformMover : MonoBehaviour
         currentTarget = points[pointNumber];
     }
     
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject == player)
+        if (collision.gameObject == player)
         {
             player.transform.parent = transform; // binds player to the moving platform
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.gameObject == player)
+        if (collision.gameObject == player)
         {
             player.transform.parent = null; // detaches player from the parent platform
         }
     }
+
+
 
 }

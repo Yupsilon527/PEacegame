@@ -45,7 +45,7 @@ public class PlayerTrigger : MonoBehaviour
         {
             if (playerState == SpeedBoostState.Boosted)
                 rigidbodyFirstPersonController.movementSettings.ForwardSpeed = previousForwardSpeed;
-            rigidbodyFirstPersonController.m_Jumping = true;
+            rigidbodyFirstPersonController.m_Flying = true;
             rigidBody.AddForce(collision.collider.transform.transform.up.normalized * rigidbodyFirstPersonController.movementSettings.JumpForce * jumpMultiplier, ForceMode.Impulse);
         }
     }
