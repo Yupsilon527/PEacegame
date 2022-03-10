@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
-using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 public class PlayerTrigger : MonoBehaviour
 {
@@ -14,6 +14,10 @@ public class PlayerTrigger : MonoBehaviour
     [SerializeField] private float jumpMultiplier = 3f;
     [Tooltip("Initial player state (must be 'NotBoosted')")]
     [SerializeField] SpeedBoostState playerState = SpeedBoostState.NotBoosted;
+    [Tooltip("Add here a scene that will be loaded after the death")]
+    [SerializeField] private Object scene;
+    [Tooltip("Elevation on which the player will die")]
+    [SerializeField] private float deathElevation = -20f;
     private Rigidbody rigidBody;
     private RigidbodyFirstPersonController rigidbodyFirstPersonController;
     private float previousForwardSpeed;
@@ -22,6 +26,12 @@ public class PlayerTrigger : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         rigidbodyFirstPersonController = GetComponent<RigidbodyFirstPersonController>(); // Getting the player movement component
+    }
+
+    private void FixedUpdate()
+    {
+        if (transform.position.y < deathElevation)
+            SceneManager.LoadScene($"{scene.name}");
     }
 
     public enum SpeedBoostState
