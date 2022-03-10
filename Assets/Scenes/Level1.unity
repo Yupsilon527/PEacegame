@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7302364, g: 0.78897995, b: 0.8498586, a: 1}
+  m_IndirectSpecularColor: {r: 0.7302238, g: 0.7889745, b: 0.8498578, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1220,6 +1220,18 @@ PrefabInstance:
     - target: {fileID: 7931776383919290673, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: movementSettings.AirSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931776383919290673, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
+      propertyPath: movementSettings.JumpForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931776383919290673, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
+      propertyPath: movementSettings.JumpDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931776383919290673, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
+      propertyPath: movementSettings.JumpForceEnd
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7931776383930010835, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: m_Name
