@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class ObjectStorageController : MonoBehaviour
 {
-    public float RayRange = 10;
+    public bool EnableOutline = true;
+    public float RetrieveRange = 20;
+    public float PlaceRange = 6;
     public BlueprintController BlueprintIndicator;
     MovableObjectController stored;
 
     private void Start()
     {
         if (BlueprintIndicator != null)
+        {
             BlueprintIndicator.ClearMesh();
+            BlueprintIndicator.gameObject.SetActive(false);
+        }
     }
     public void StoreObject(MovableObjectController target)
     {
@@ -25,7 +30,7 @@ public class ObjectStorageController : MonoBehaviour
     }
     public void TryStoreObjectRay(Ray ray)
     {
-        if (Physics.Raycast(ray, out RaycastHit hit, RayRange) && hit.collider.TryGetComponent<MovableObjectController>(out MovableObjectController tgtObject))
+        if (Physics.Raycast(ray, out RaycastHit hit, RetrieveRange) && hit.transform.tag == "CanBeStored" && hit.collider.TryGetComponent<MovableObjectController>(out MovableObjectController tgtObject))
         {
             StoreObject(tgtObject);
 
@@ -56,6 +61,19 @@ public class ObjectStorageController : MonoBehaviour
         {
                 Ray checkRay = new Ray(transform.position, transform.forward);
                 TryStoreObjectRay(checkRay);
+                ClearOutline();
+            }
+            else if (EnableOutline)
+            {
+                Ray checkRay = new Ray(transform.position, transform.forward);
+                if (Physics.Raycast(checkRay, out RaycastHit hit, RetrieveRange) && hit.transform.tag == "CanBeStored")
+                {
+                    OutlineObject(hit.transform);
+                }
+                else
+                {
+                    ClearOutline();
+                }
             }
         }
         else
@@ -65,33 +83,52 @@ public class ObjectStorageController : MonoBehaviour
             {
                 if (BlueprintIndicator != null)
                 {
-                    if (Physics.Raycast(PlaceRay, out RaycastHit hit, RayRange))
+                    if (Physics.Raycast(PlaceRay, out RaycastHit hit, PlaceRange))
                     {
                         BlueprintIndicator.ChangeState(stored.CanBePlacedThere(hit.point));
                         BlueprintIndicator.transform.position = hit.point - stored.CenterDelta;
-                        BlueprintIndicator.gameObject.SetActive(true);
                     }
                     else
                     {
-                        Vector3 point = PlaceRay.GetPoint(RayRange);
+                        Vector3 point = PlaceRay.GetPoint(PlaceRange);
                         BlueprintIndicator.ChangeState(!stored.RequiresGround && stored.CanBePlacedThere(hit.point));
                         BlueprintIndicator.transform.position = point - stored.CenterDelta;
                     }
+                    BlueprintIndicator.gameObject.SetActive(true);
                 }
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                if (Physics.Raycast(PlaceRay, out RaycastHit hit, RayRange))
+                if (Physics.Raycast(PlaceRay, out RaycastHit hit, PlaceRange))
                 {
                     TryRetrieveObject(hit.point);
                 }
                 else if (!stored.RequiresGround)
                 {
-                    TryRetrieveObject(PlaceRay.GetPoint(RayRange));
+                    TryRetrieveObject(PlaceRay.GetPoint(PlaceRange));
                 }
                 if (BlueprintIndicator != null)
                     BlueprintIndicator.gameObject.SetActive(false);
             }
         }
+    }
+    Outline outlinedObject;
+    public void OutlineObject(Transform target)
+    {
+        Outline outLine = target.GetComponentInChildren<Outline>();
+                    if (outLine!=null)
+        {
+            if (outlinedObject == outLine)
+                return;
+            ClearOutline();
+            outlinedObject = outLine;
+            outLine.enabled = true;
+        }
+    }
+    public void ClearOutline()
+    {
+        if (outlinedObject != null)
+            outlinedObject.enabled = false;
+        outlinedObject = null;
     }
 }
