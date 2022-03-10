@@ -180,7 +180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2134120a15271c14287e51a7ba0cc83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RayRange: 10
+  EnableOutline: 1
+  RetrieveRange: 20
+  PlaceRange: 6
   BlueprintIndicator: {fileID: 0}
 --- !u!1 &7931776383930010835
 GameObject:
@@ -264,6 +266,7 @@ MonoBehaviour:
     ForwardSpeed: 8
     BackwardSpeed: 4
     StrafeSpeed: 4
+    AirSpeed: 8
     RunMultiplier: 2
     RunKey: 304
     JumpForce: 50
@@ -316,7 +319,10 @@ MonoBehaviour:
     slowDownRate: 20
     airControl: 1
     shellOffset: 0
-  m_Jumping: 0
+  m_Flying: 0
+  localVelocityX: 0
+  localVelocityY: 0
+  localVelocityZ: 0
 --- !u!114 &-4271630060830471089
 MonoBehaviour:
   m_ObjectHideFlags: 0

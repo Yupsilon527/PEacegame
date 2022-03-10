@@ -147,7 +147,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             GroundCheck();
             Vector2 input = GetInput();
             // added during ConBITi Games Jam to fix object flying behaviour during long jumps
-            if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (advancedSettings.airControl && m_Flying))
+            if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && advancedSettings.airControl && !m_IsGrounded && m_Flying)
             {
                 movementSettings.CurrentTargetSpeed = movementSettings.AirSpeed; // added drung ConBITi Games Jam
 
@@ -173,7 +173,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 }
 
             }
-            if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (/*advancedSettings.airControl || */m_IsGrounded))
+            if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (m_IsGrounded || m_Jumping))
             {
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward * input.y + cam.transform.right * input.x;
