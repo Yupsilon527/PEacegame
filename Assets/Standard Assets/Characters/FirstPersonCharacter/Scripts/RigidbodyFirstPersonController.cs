@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -14,9 +15,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float ForwardSpeed = 8.0f;   // Speed when walking forward
             public float BackwardSpeed = 4.0f;  // Speed when walking backwards
             public float StrafeSpeed = 4.0f;    // Speed when walking sideways
-            public float AirSpeed = 8.0f;    // Speed when flying in the air (added during the ConBITi Games Jam)
+            public float AirControlSpeed = 4.0f;    // Speed when flying in the air (added during the ConBITi Games Jam)
             public float RunMultiplier = 2.0f;   // Speed when sprinting
-            public KeyCode RunKey = KeyCode.LeftShift;
+            public KeyCode RunKey= KeyCode.LeftShift;
             public float JumpForce = 50f;
             public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
             [HideInInspector] public float CurrentTargetSpeed = 8f;
@@ -88,7 +89,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
-        [HideInInspector] public bool m_Flying;
+        /*[HideInInspector]*/ public bool m_Flying; // Flying state toggle (added during the ConBITi Games Jam)
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
 
 
@@ -142,13 +143,23 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float localVelocityY;
         public float localVelocityZ;
 
+        public float forceZ;
+        public float forceX;
+
         private void FixedUpdate()
         {
             GroundCheck();
+
+            // If the player is not jumping, changes the player's state to 'Flying' (added during the ConBITi Games Jam)
+            if (!m_IsGrounded && !m_Jumping)
+                m_Flying = true;
+
             Vector2 input = GetInput();
+
+            // Player movement control when flying in teh air (added during the ConBITi Games Jam)
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && advancedSettings.airControl && !m_IsGrounded && m_Flying)
             {
-                movementSettings.CurrentTargetSpeed = movementSettings.AirSpeed; // added drung ConBITi Games Jam
+                movementSettings.CurrentTargetSpeed = movementSettings.AirControlSpeed; // Changes speed to AirControlSpeed (added during the ConBITi Games Jam)
 
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward * input.y + cam.transform.right * input.x;
@@ -162,17 +173,41 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 localVelocityY = transform.InverseTransformDirection(m_RigidBody.velocity).y;
                 localVelocityZ = transform.InverseTransformDirection(m_RigidBody.velocity).z;
 
-                if (Math.Abs(localVelocityZ) < movementSettings.CurrentTargetSpeed || (localVelocityZ < 0f && input.y > 0f) || (localVelocityZ > 0f && input.y < 0f))
+                if (Mathf.Abs(input.y) > float.Epsilon && (Math.Abs(localVelocityZ) < movementSettings.CurrentTargetSpeed || (localVelocityZ <= float.Epsilon && input.y > float.Epsilon) || (localVelocityZ >= float.Epsilon && input.y < float.Epsilon)))
                 {
+                    forceZ = desiredMove.x;
+                    forceZ = desiredMove.z;
                     m_RigidBody.AddForce(new Vector3(0f, 0f, desiredMove.z), ForceMode.Impulse);
                 }
-                if (Math.Abs(localVelocityX) < movementSettings.CurrentTargetSpeed || (localVelocityX < 0f && input.x > 0f) || (localVelocityX > 0f && input.x < 0f))
+                if (Mathf.Abs(input.x) > float.Epsilon && (Math.Abs(localVelocityX) < movementSettings.CurrentTargetSpeed || (localVelocityX <= float.Epsilon && input.x > float.Epsilon) || (localVelocityX >= float.Epsilon && input.x < float.Epsilon)))
                 {
+                    forceZ = desiredMove.x;
+                    forceZ = desiredMove.z;
                     m_RigidBody.AddForce(new Vector3(desiredMove.x, 0f, 0f), ForceMode.Impulse);
                 }
 
+                #region Draft code
+                //if (Mathf.Abs(input.y) > float.Epsilon && (Math.Abs(localVelocityZ) < movementSettings.CurrentTargetSpeed || (localVelocityZ <= float.Epsilon && input.y > float.Epsilon) || (localVelocityZ >= float.Epsilon && input.y < float.Epsilon)))
+                //{                    
+                //    desiredMove.z = desiredMove.z * movementSettings.CurrentTargetSpeed;
+                //    forceZ = desiredMove.z;
+                //    forceX = desiredMove.x;
+                //}
+                //if (Mathf.Abs(input.x) > float.Epsilon && (Math.Abs(localVelocityX) < movementSettings.CurrentTargetSpeed || (localVelocityX <= float.Epsilon && input.x > float.Epsilon) || (localVelocityX >= float.Epsilon && input.x < float.Epsilon)))
+                //{
+                //    desiredMove.x = desiredMove.x * movementSettings.CurrentTargetSpeed;
+                //    forceZ = desiredMove.z;
+                //    forceX = desiredMove.x;
+                //}
+                //if (m_RigidBody.velocity.sqrMagnitude <
+                //(movementSettings.CurrentTargetSpeed * movementSettings.CurrentTargetSpeed))
+                //{
+                //    m_RigidBody.AddForce(desiredMove * SlopeMultiplier(), ForceMode.Impulse);
+                //}
+                #endregion
             }
-            else if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (m_IsGrounded || m_Jumping))
+            // Player movement control in all other cases (some tweaks of the initial code during the ConBITi Games Jam)
+            else if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (m_IsGrounded || m_Jumping)) // Changed during the ConBITi Games Jam. Initial bool was '(m_IsGrounded || advancedSettings.airControl)' 
             {
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward * input.y + cam.transform.right * input.x;
@@ -201,6 +236,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     m_RigidBody.velocity = new Vector3(m_RigidBody.velocity.x, 0f, m_RigidBody.velocity.z);
                     m_RigidBody.AddForce(new Vector3(0f, movementSettings.JumpForce, 0f), ForceMode.Impulse);
                     m_Jumping = true;
+                    StartCoroutine("JumpTimer"); // Small tweak here to check if the player is flying  (added during the ConBITi Games Jam)
                 }
 
                 if (!m_Jumping && !m_Flying && Mathf.Abs(input.x) < float.Epsilon && Mathf.Abs(input.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
@@ -211,12 +247,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
             else
             {
                 m_RigidBody.drag = 0f;
-                if (m_PreviouslyGrounded && !m_Jumping && !m_Flying)
+                if (m_PreviouslyGrounded && !m_Jumping && !m_Flying) // !m_Flying added during the ConBITi Games Jam
                 {
                     StickToGroundHelper();
                 }
             }
             m_Jump = false;
+        }
+        // Changes player to flying state if is in the air 1 second after a jump (added during the ConBITi Games Jam)
+        IEnumerator JumpTimer()
+        {
+            yield return new WaitForSeconds(1f);
+            if (!m_IsGrounded)
+                m_Flying = true;
         }
 
 
@@ -294,6 +337,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_Jumping = false;
             }
+            // Disable flying state (added during the ConBITi Games Jam)
             if (!m_PreviouslyGrounded && m_IsGrounded && m_Flying)
             {
                 m_Flying = false;
