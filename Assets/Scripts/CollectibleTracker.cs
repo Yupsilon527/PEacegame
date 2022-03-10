@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class CollectibleTracker : MonoBehaviour
 {
-    public List<Text> fullWord;
+    public List<GameObject> fullWord;
 
     private void Start()
     {
         // Disables all UI letters
-        foreach (Text letter in fullWord)
-            letter.enabled = false;
+        foreach (GameObject letter in fullWord)
+            letter.SetActive(false);
     }
 }
