@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10972a1d7f72137438de8037922b89a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathElevation: -10
+  deathElevation: -5
 --- !u!82 &2048095652
 AudioSource:
   m_ObjectHideFlags: 0
