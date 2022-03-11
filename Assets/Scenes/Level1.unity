@@ -2046,6 +2046,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4271630060830471089, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
+      propertyPath: scene
+      value: 
+      objectReference: {fileID: 102900000, guid: 0cf4a9e7046b1a54293a9a6caef37259, type: 3}
     - target: {fileID: 338880594579167234, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: BlueprintIndicator
       value: 
@@ -2070,9 +2074,17 @@ PrefabInstance:
       propertyPath: fullWord.Array.data[4]
       value: 
       objectReference: {fileID: 1711123592}
+    - target: {fileID: 7931776383919290673, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
+      propertyPath: movementSettings.AirSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7931776383930010835, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: m_Name
       value: Our Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7931776383930010835, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7931776383930110199, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: m_RootOrder
@@ -9171,7 +9183,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.274
       inSlope: 0
       outSlope: 0
       tangentMode: 0
