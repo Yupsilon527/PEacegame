@@ -232,6 +232,7 @@ GameObject:
   - component: {fileID: 7931776383919290673}
   - component: {fileID: -4271630060830471089}
   - component: {fileID: 5730613380873937457}
+  - component: {fileID: 2619622543026269698}
   m_Layer: 0
   m_Name: Our Player
   m_TagString: Player
@@ -296,6 +297,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c9795a96c094f4cbde4d65546aa9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioJump: {fileID: 0}
+  audioWalk: {fileID: 0}
+  audioRun: {fileID: 0}
+  audioPickUp: {fileID: 0}
   cam: {fileID: 7931776383928504053}
   movementSettings:
     ForwardSpeed: 8
@@ -399,3 +404,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &2619622543026269698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931776383930010835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10972a1d7f72137438de8037922b89a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
