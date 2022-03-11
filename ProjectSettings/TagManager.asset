@@ -8,6 +8,7 @@ TagManager:
   - SpeedBoostTrigger
   - JumpTrigger
   - CanBeStored
+  - SpawnAtRuntime
   layers:
   - Default
   - TransparentFX
