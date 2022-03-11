@@ -55,10 +55,9 @@ public class Collectible : MonoBehaviour
     // Enables a corresponding letter in UI Canvas
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))        
-                
+        if (other.gameObject.CompareTag("Player"))
         {
-            
+            audioSource.Play();
             fullWord = other.GetComponent<CollectibleTracker>().fullWord;
             foreach (GameObject letter in fullWord)
             {
@@ -66,20 +65,17 @@ public class Collectible : MonoBehaviour
                 {
                     letter.SetActive(true);
 
-
                 }
             }
-        
-            if (other.gameObject.CompareTag("Player"))
-                {
-                    audioSource.Play(); //play "PickUp" Sound
-                }
-                
             
-            Destroy(gameObject);
-        }
 
-       
-        
+
+            {
+                GameObject.Destroy(this.gameObject);
+            }
+
+
+
+        }
     }
 }
