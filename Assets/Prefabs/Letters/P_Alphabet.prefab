@@ -159,7 +159,7 @@ MonoBehaviour:
   rotationSpeed: 50
   movementVector: {x: 0, y: 0.4, z: 0}
   period: 5
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 390111680}
 --- !u!1 &6201863040113613100
 GameObject:
   m_ObjectHideFlags: 0
