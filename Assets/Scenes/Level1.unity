@@ -2063,6 +2063,10 @@ PrefabInstance:
       propertyPath: scene
       value: 
       objectReference: {fileID: 102900000, guid: 0cf4a9e7046b1a54293a9a6caef37259, type: 3}
+    - target: {fileID: 2048095652, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 338880594579167234, guid: 369f5f516fcd04b4e91068101a33217a, type: 3}
       propertyPath: BlueprintIndicator
       value: 

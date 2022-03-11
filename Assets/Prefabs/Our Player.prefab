@@ -388,6 +388,9 @@ MonoBehaviour:
   speedBoostMultiplier: 2
   jumpMultiplier: 30
   playerState: 1
+  source: {fileID: 2048095652}
+  BoostClip: {fileID: 8300000, guid: ca87c3f3c9f0f49429d8e3decf7f86ba, type: 3}
+  JumpClip: {fileID: 8300000, guid: f1702ea4227604140aaa43d4c410a4d7, type: 3}
 --- !u!114 &5730613380873937457
 MonoBehaviour:
   m_ObjectHideFlags: 0

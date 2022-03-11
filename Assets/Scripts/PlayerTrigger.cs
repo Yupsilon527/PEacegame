@@ -16,6 +16,9 @@ public class PlayerTrigger : MonoBehaviour
     private Rigidbody rigidBody;
     private RigidbodyFirstPersonController rigidbodyFirstPersonController;
     private float previousForwardSpeed;
+    public AudioSource source;
+    public AudioClip BoostClip;
+    public AudioClip JumpClip;
 
     void Start()
     {
@@ -38,6 +41,8 @@ public class PlayerTrigger : MonoBehaviour
             rigidbodyFirstPersonController.movementSettings.ForwardSpeed *= speedBoostMultiplier;
             playerState = SpeedBoostState.Boosted;
             StartCoroutine("SpeedBoostTimer");
+            if (source != null)
+                source.PlayOneShot(BoostClip);
         }
         // Makes the player to do a reinforced jump using the multiplicator defined in the editor
         // Speed boost is disabled after collision
@@ -47,6 +52,8 @@ public class PlayerTrigger : MonoBehaviour
                 rigidbodyFirstPersonController.movementSettings.ForwardSpeed = previousForwardSpeed;
             rigidbodyFirstPersonController.m_Flying = true;
             rigidBody.AddForce(collision.collider.transform.transform.up.normalized * rigidbodyFirstPersonController.movementSettings.JumpForce * jumpMultiplier, ForceMode.Impulse);
+            if (source != null)
+                source.PlayOneShot(JumpClip);
         }
     }
 
