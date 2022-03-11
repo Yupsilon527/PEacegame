@@ -15,14 +15,15 @@ public class Collectible : MonoBehaviour
     [SerializeField] float period = 5f;
     Vector3 startingPos;
     private List<GameObject> fullWord;
+    public AudioClip pickupClip;
     public AudioSource audioSource;
-    
-    
+
+
 
     private void Start()
     {
         startingPos = transform.position;
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
         
     }
 
@@ -57,7 +58,7 @@ public class Collectible : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            audioSource.Play();
+            audioSource.PlayOneShot(pickupClip);
             fullWord = other.GetComponent<CollectibleTracker>().fullWord;
             foreach (GameObject letter in fullWord)
             {
@@ -71,7 +72,7 @@ public class Collectible : MonoBehaviour
 
 
             {
-                GameObject.Destroy(this.gameObject);
+                gameObject.SetActive(false);
             }
 
 
