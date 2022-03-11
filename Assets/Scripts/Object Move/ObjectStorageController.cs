@@ -28,8 +28,6 @@ public class ObjectStorageController : MonoBehaviour
             if (BlueprintIndicator != null)
                 BlueprintIndicator.LoadObject(target.gameObject);
             stored = target;
-            if (source != null)
-                source.PlayOneShot(RetrieveSound);
         }
     }
     public void TryStoreObjectRay(Ray ray)
@@ -47,10 +45,8 @@ public class ObjectStorageController : MonoBehaviour
         {
             stored.OnRetrieve(point);
             stored = null;
-        }
-        else
-        {
-            Debug.Log("Invalid Location");
+            if (source != null)
+                source.PlayOneShot(RetrieveSound);
         }
     }
     protected void Update()
