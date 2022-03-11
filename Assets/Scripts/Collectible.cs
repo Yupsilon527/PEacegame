@@ -65,15 +65,17 @@ public class Collectible : MonoBehaviour
                 if (gameObject.name == letter.name)
                 {
                     letter.SetActive(true);
-                    
-                    
+
+
                 }
-         if (other.gameObject.CompareTag("Player"))
+            }
+        
+            if (other.gameObject.CompareTag("Player"))
                 {
                     audioSource.Play(); //play "PickUp" Sound
                 }
                 
-            }
+            
             Destroy(gameObject);
         }
 
