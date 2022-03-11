@@ -9,6 +9,38 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof(CapsuleCollider))]
     public class RigidbodyFirstPersonController : MonoBehaviour
     {
+        public AudioClip audioJump;
+        public AudioClip audioWalk;
+        public AudioClip audioRun;
+        public AudioClip audioPickUp;
+        AudioSource audioSource;
+
+        void Awake()
+        {
+            this.audioSource = GetComponent<AudioSource>();
+        }
+
+        void PlaySound(String action)
+        {
+            switch (action)
+            {
+                case "Jump":
+                    audioSource.clip = audioJump;
+                    break;
+                case "walk":
+                    audioSource.clip = audioWalk;
+                    break;
+                case "Run":
+                    audioSource.clip = audioRun;
+                    break;
+                case "PickUp":
+                    audioSource.clip = audioPickUp;
+                    break;
+            }
+            audioSource.Play();
+        }
+
+        
         [Serializable]
         public class MovementSettings
         {
@@ -24,6 +56,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             public float JumpForceEnd = 20f;
             public AnimationCurve SlopeCurveModifier = new AnimationCurve(new Keyframe(-90.0f, 1.0f), new Keyframe(0.0f, 1.0f), new Keyframe(90.0f, 0.0f));
             [HideInInspector] public float CurrentTargetSpeed = 8f;
+           
+            
+            
 
 #if !MOBILE_INPUT
             private bool m_Running;
@@ -53,6 +88,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 {
                     CurrentTargetSpeed *= RunMultiplier;
                     m_Running = true;
+                    
                 }
                 else
                 {
@@ -139,6 +175,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
             {
                 StartJumping();
+                PlaySound("Jump");
             }
         }
 

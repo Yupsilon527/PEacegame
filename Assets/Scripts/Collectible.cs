@@ -16,17 +16,21 @@ public class Collectible : MonoBehaviour
     Vector3 startingPos;
     private List<GameObject> fullWord;
     public AudioSource audioSource;
+    
+    
 
     private void Start()
     {
         startingPos = transform.position;
         audioSource = GetComponent<AudioSource>();
+        
     }
 
     void Update()
     {
         RotateObject();
         OscillateObject();
+        
     }
 
     private void RotateObject()
@@ -51,22 +55,29 @@ public class Collectible : MonoBehaviour
     // Enables a corresponding letter in UI Canvas
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player"))        
+                
         {
+            
             fullWord = other.GetComponent<CollectibleTracker>().fullWord;
             foreach (GameObject letter in fullWord)
             {
                 if (gameObject.name == letter.name)
                 {
                     letter.SetActive(true);
+                    
+                    
                 }
+         if (other.gameObject.CompareTag("Player"))
+                {
+                    audioSource.Play(); //play "PickUp" Sound
+                }
+                
             }
             Destroy(gameObject);
         }
 
-        if (other.gameObject.CompareTag("Player"))
-        {
-            audioSource.Play(); //play sound here
-        }
+       
+        
     }
 }
