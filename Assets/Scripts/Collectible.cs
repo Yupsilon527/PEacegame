@@ -6,32 +6,30 @@ using UnityEngine.UI;
 public class Collectible : MonoBehaviour
 {
     [Tooltip("Rotation vector")]
-    public Vector3 rotationVector = new Vector3(0f, 1f ,0f);
+    public Vector3 rotationVector = new Vector3(0f, 1f, 0f);
     [Tooltip("Rotation speed")]
     [SerializeField] private float rotationSpeed = 50f;
     [Tooltip("Movement vector")]
     [SerializeField] Vector3 movementVector = new Vector3(0f, 0.4f, 0f);
     [Tooltip("Movement period")]
     [SerializeField] float period = 5f;
+    [Tooltip("Sound played when a letter is collected")]
+    [SerializeField] GameObject collectibleFX;
     Vector3 startingPos;
     private List<GameObject> fullWord;
-    public AudioClip pickupClip;
-    public AudioSource audioSource;
-
-
+    GameObject parentGameObject;
 
     private void Start()
     {
         startingPos = transform.position;
-        //audioSource = GetComponent<AudioSource>();
-        
+        parentGameObject = GameObject.FindWithTag("SpawnAtRuntime");
     }
 
     void Update()
     {
         RotateObject();
         OscillateObject();
-        
+
     }
 
     private void RotateObject()
@@ -52,31 +50,29 @@ public class Collectible : MonoBehaviour
         transform.position = startingPos + offset;
     }
 
-    // Destroys the gameObject if collided with a player object
     // Enables a corresponding letter in UI Canvas
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            audioSource.PlayOneShot(pickupClip);
             fullWord = other.GetComponent<CollectibleTracker>().fullWord;
             foreach (GameObject letter in fullWord)
             {
                 if (gameObject.name == letter.name)
                 {
                     letter.SetActive(true);
-
                 }
             }
-            
-
-
-            {
-                gameObject.SetActive(false);
-            }
-
-
-
+            Collect();
         }
+    }
+
+    // Pick up sound played
+    // Destroys the gameObject if collided with a player object
+    private void Collect()
+    {
+        GameObject vfx = Instantiate(collectibleFX, transform.position, Quaternion.identity);
+        vfx.transform.parent = parentGameObject.transform;
+        Destroy(gameObject);
     }
 }

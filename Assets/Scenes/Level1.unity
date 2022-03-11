@@ -186,6 +186,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 2048095646}
+    - target: {fileID: 5665101309266816510, guid: d7353f01230bde346a18c0395d253b85, type: 3}
+      propertyPath: collectibleFX
+      value: 
+      objectReference: {fileID: 1066476420895496863, guid: 1de79570bec650340b58dabc95b4b702, type: 3}
     m_RemovedComponents:
     - {fileID: 2716501845224751856, guid: d7353f01230bde346a18c0395d253b85, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d7353f01230bde346a18c0395d253b85, type: 3}
@@ -3065,6 +3069,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 2048095646}
+    - target: {fileID: 681301646, guid: e2a9007332884034e96123f5efa0345f, type: 3}
+      propertyPath: collectibleFX
+      value: 
+      objectReference: {fileID: 1066476420895496863, guid: 1de79570bec650340b58dabc95b4b702, type: 3}
     - target: {fileID: 7471035740183232737, guid: e2a9007332884034e96123f5efa0345f, type: 3}
       propertyPath: m_Name
       value: 4
@@ -3164,6 +3172,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 2048095646}
+    - target: {fileID: 690340420, guid: 2035c4fb87891e34cb0a0acf9878a6db, type: 3}
+      propertyPath: collectibleFX
+      value: 
+      objectReference: {fileID: 1066476420895496863, guid: 1de79570bec650340b58dabc95b4b702, type: 3}
     - target: {fileID: 7156460255552270078, guid: 2035c4fb87891e34cb0a0acf9878a6db, type: 3}
       propertyPath: m_Name
       value: 3
@@ -7892,6 +7904,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 2048095646}
+    - target: {fileID: 390111678, guid: d004e3955c9f2f04291d9ea26372f4d1, type: 3}
+      propertyPath: collectibleFX
+      value: 
+      objectReference: {fileID: 1066476420895496863, guid: 1de79570bec650340b58dabc95b4b702, type: 3}
     - target: {fileID: 2366477638048660303, guid: d004e3955c9f2f04291d9ea26372f4d1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -9781,6 +9797,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 2048095646}
+    - target: {fileID: 5665101309266816510, guid: d7353f01230bde346a18c0395d253b85, type: 3}
+      propertyPath: collectibleFX
+      value: 
+      objectReference: {fileID: 1066476420895496863, guid: 1de79570bec650340b58dabc95b4b702, type: 3}
     m_RemovedComponents:
     - {fileID: 2716501845224751856, guid: d7353f01230bde346a18c0395d253b85, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d7353f01230bde346a18c0395d253b85, type: 3}
