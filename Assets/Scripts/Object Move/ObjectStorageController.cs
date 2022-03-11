@@ -9,7 +9,9 @@ public class ObjectStorageController : MonoBehaviour
     public float PlaceRange = 6;
     public BlueprintController BlueprintIndicator;
     MovableObjectController stored;
-
+    public AudioSource source;
+    public AudioClip StoreSound;
+    public AudioClip RetrieveSound;
     private void Start()
     {
         if (BlueprintIndicator != null)
@@ -26,6 +28,8 @@ public class ObjectStorageController : MonoBehaviour
             if (BlueprintIndicator != null)
                 BlueprintIndicator.LoadObject(target.gameObject);
             stored = target;
+            if (source != null)
+                source.PlayOneShot(RetrieveSound);
         }
     }
     public void TryStoreObjectRay(Ray ray)
@@ -33,7 +37,7 @@ public class ObjectStorageController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, RetrieveRange) && hit.transform.tag == "CanBeStored" && hit.collider.TryGetComponent<MovableObjectController>(out MovableObjectController tgtObject))
         {
             StoreObject(tgtObject);
-
+            source.PlayOneShot(StoreSound);
         }
     }
     public void TryRetrieveObject(Vector3 point)
